@@ -8,7 +8,5 @@ jobs:
     uses: ./.github/workflows/external-workflow.yml
     with:
       param1: 'value1'
-    secrets: inherit
-
-env:
-  ENVIRONMENT: non-prod
+      ENVIRONMENT: non-prod
+  
