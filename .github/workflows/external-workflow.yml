@@ -6,6 +6,11 @@ on:
       param1:
         required: true
         type: string
+      ENVIRONMENT:
+        required: true
+        type: string 
+         
+      
 
 jobs:
   example-job:
@@ -15,7 +20,7 @@ jobs:
       EXAMPLE_ENV: ${{ inputs.param1 }}
       ADDITIONAL_ENV1: example_value1
       ADDITIONAL_ENV2: example_value2
-      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+      ENVIRONMENT: ${{ inputs.ENVIRONMENT }}
 
     steps:
       - name: Checkout repository
