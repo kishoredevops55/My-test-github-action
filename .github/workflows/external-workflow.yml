@@ -13,8 +13,9 @@ jobs:
 
     env:
       EXAMPLE_ENV: ${{ inputs.param1 }}
-      ADDITIONAL_ENV1: Kishore 
-      ADDITIONAL_ENV2: Sharma 
+      ADDITIONAL_ENV1: example_value1
+      ADDITIONAL_ENV2: example_value2
+      ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
 
     steps:
       - name: Checkout repository
@@ -24,6 +25,8 @@ jobs:
         run: |
           echo "Running some example logic with $EXAMPLE_ENV"
           echo "Using additional environment variables: $ADDITIONAL_ENV1, $ADDITIONAL_ENV2"
+          echo "Environment: $ENVIRONMENT"
           echo "example_output=${{ env.EXAMPLE_ENV }}" >> $GITHUB_ENV
           echo "additional_output1=${{ env.ADDITIONAL_ENV1 }}" >> $GITHUB_ENV
           echo "additional_output2=${{ env.ADDITIONAL_ENV2 }}" >> $GITHUB_ENV
+          echo "environment_output=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
