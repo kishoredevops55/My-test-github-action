@@ -9,3 +9,6 @@ jobs:
     with:
       param1: 'value1'
     secrets: inherit
+
+env:
+  ENVIRONMENT: non-prod
