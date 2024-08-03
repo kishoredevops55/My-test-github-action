@@ -1,0 +1,22 @@
+name: Final Workflow
+
+on: 
+  workflow_run:
+    workflows: ["First Workflow"]
+    types:
+      - completed
+
+jobs:
+  use-external-output:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Use output from external workflow
+        env:
+          EXTERNAL_OUTPUT: ${{ needs.call-external-workflow.outputs.example_output }}
+        run: |
+          echo "Using external output: $EXTERNAL_OUTPUT"
+          echo "External result: ${{ env.result }}"
