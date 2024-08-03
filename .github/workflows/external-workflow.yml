@@ -1,29 +1,26 @@
-name: External Workflow
+name: Final Workflow
 
-on:
-  workflow_call:
-    inputs:
-      param1:
-        required: true
-        type: string
+on: 
+  workflow_run:
+    workflows: ["First Workflow"]
+    types:
+      - completed
 
 jobs:
-  example-job:
+  use-external-output:
     runs-on: ubuntu-latest
 
-    env:
-      EXAMPLE_ENV: ${{ inputs.param1 }}
-      ADDITIONAL_ENV1: Kishore 
-      ADDITIONAL_ENV2: shar my application 
+    needs: call-external-workflow
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run some example logic
+      - name: Use output from external workflow
+        env:
+          EXTERNAL_OUTPUT: ${{ needs.call-external-workflow.outputs.example_output }}
+          ADDITIONAL_OUTPUT1: ${{ needs.call-external-workflow.outputs.additional_output1 }}
+          ADDITIONAL_OUTPUT2: ${{ needs.call-external-workflow.outputs.additional_output2 }}
         run: |
-          echo "Running some example logic with $EXAMPLE_ENV"
-          echo "Using additional environment variables: $ADDITIONAL_ENV1, $ADDITIONAL_ENV2"
-          echo "example_output=${{ env.EXAMPLE_ENV }}" >> $GITHUB_ENV
-          echo "additional_output1=${{ env.ADDITIONAL_ENV1 }}" >> $GITHUB_ENV
-          echo "additional_output2=${{ env.ADDITIONAL_ENV2 }}" >> $GITHUB_ENV
+          echo "Using external output: $EXTERNAL_OUTPUT"
+          echo "Using additional outputs: $ADDITIONAL_OUTPUT1, $ADDITIONAL_OUTPUT2"
