@@ -1,9 +1,7 @@
 name: First Workflow
 
 on: 
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   call-external-workflow:
@@ -11,4 +9,3 @@ jobs:
     with:
       param1: 'value1'
     secrets: inherit
-    
