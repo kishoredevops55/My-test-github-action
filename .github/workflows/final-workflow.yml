@@ -21,6 +21,8 @@ jobs:
           EXTERNAL_OUTPUT: ${{ needs.call-external-workflow.outputs.example_output }}
           ADDITIONAL_OUTPUT1: ${{ needs.call-external-workflow.outputs.additional_output1 }}
           ADDITIONAL_OUTPUT2: ${{ needs.call-external-workflow.outputs.additional_output2 }}
+          ENVIRONMENT_OUTPUT: ${{ needs.call-external-workflow.outputs.environment_output }}
         run: |
           echo "Using external output: $EXTERNAL_OUTPUT"
           echo "Using additional outputs: $ADDITIONAL_OUTPUT1, $ADDITIONAL_OUTPUT2"
+          echo "Environment: $ENVIRONMENT_OUTPUT"
