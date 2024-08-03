@@ -1,0 +1,14 @@
+name: First Workflow
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  call-external-workflow:
+    uses: ./.github/workflows/external-workflow.yml
+    with:
+      param1: 'value1'
+    secrets: inherit
+    
