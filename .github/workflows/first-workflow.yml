@@ -7,9 +7,14 @@ jobs:
   call-external-workflow:
     uses: ./.github/workflows/external-workflow.yml
     with:
-      param1: 'value1'
+      param1: 'kishorr'
       ENVIRONMENT: non-prod
+
   call-final:
     needs: call-external-workflow
     uses: ./.github/workflows/final-workflow.yml
-  
+    with:
+      example_output: ${{ needs.call-external-workflow.outputs.example_output }}
+      additional_output1: ${{ needs.call-external-workflow.outputs.additional_output1 }}
+      additional_output2: ${{ needs.call-external-workflow.outputs.additional_output2 }}
+      environment_output: ${{ needs.call-external-workflow.outputs.environment_output }}
