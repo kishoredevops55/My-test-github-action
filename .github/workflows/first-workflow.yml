@@ -1,36 +1,20 @@
-name: Final Workflow
+name: First Workflow
 
 on: 
-  workflow_call:
-    inputs:
-      example_output:
-        required: true
-        type: string
-      additional_output1:
-        required: true
-        type: string
-      additional_output2:
-        required: true
-        type: string
-      environment_output:
-        required: true
-        type: string
+  workflow_dispatch:
 
 jobs:
-  use-external-output:
-    runs-on: ubuntu-latest
+  call-external-workflow:
+    uses: ./.github/workflows/external-workflow.yml
+    with:
+      param1: 'mutiyala'
+      ENVIRONMENT: non-prod
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Use output from external workflow
-        env:
-          EXTERNAL_OUTPUT: ${{ inputs.example_output }}
-          ADDITIONAL_OUTPUT1: ${{ inputs.additional_output1 }}
-          ADDITIONAL_OUTPUT2: ${{ inputs.additional_output2 }}
-          ENVIRONMENT_OUTPUT: ${{ inputs.environment_output }}
-        run: |
-          echo "Using external output: $EXTERNAL_OUTPUT"
-          echo "Using additional outputs: $ADDITIONAL_OUTPUT1, $ADDITIONAL_OUTPUT2"
-          echo "Environment: $ENVIRONMENT_OUTPUT"
+  call-final:
+    needs: call-external-workflow
+    uses: ./.github/workflows/final-workflow.yml
+    with:
+      example_output: ${{ needs.call-external.outputs.example_output }}
+      additional_output1: ${{ needs.call-external.outputs.additional_output1 }}
+      additional_output2: ${{ needs.call-external.outputs.additional_output2 }}
+      environment_output: ${{ needs.call-external.outputs.environment_output }}
