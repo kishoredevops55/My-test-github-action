@@ -5,12 +5,25 @@ on:
 
 jobs:
   call-external-workflow:
-    uses: ./.github/workflows/external-workflow.yml
-    with:
-      param1: 'mutiyala'
-      ENVIRONMENT: non-prod
+    runs-on: ubuntu-latest
+    outputs:
+      example_output: ${{ steps.call-external-workflow.outputs.example_output }}
+      additional_output1: ${{ steps.call-external-workflow.outputs.additional_output1 }}
+      additional_output2: ${{ steps.call-external-workflow.outputs.additional_output2 }}
+      environment_output: ${{ steps.call-external-workflow.outputs.environment_output }}
+    steps:
+      - name: Call external workflow
+        id: call-external-workflow
+        uses: ./.github/workflows/external-workflow.yml
+        with:
+          param1: 'mutiyala'
+          ENVIRONMENT: non-prod
 
   call-final:
     needs: call-external-workflow
     uses: ./.github/workflows/final-workflow.yml
-      
+    with:
+      example_output: ${{ jobs.call-external-workflow.outputs.example_output }}
+      additional_output1: ${{ jobs.call-external-workflow.outputs.additional_output1 }}
+      additional_output2: ${{ jobs.call-external-workflow.outputs.additional_output2 }}
+      environment_output: ${{ jobs.call-external-workflow.outputs.environment_output }}
