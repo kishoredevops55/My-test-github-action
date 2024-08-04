@@ -13,8 +13,3 @@ jobs:
   call-final:
     needs: call-external-workflow
     uses: ./.github/workflows/final-workflow.yml
-    with:
-      example_output: ${{ needs.call-external.outputs.example_output }}
-      additional_output1: ${{ needs.call-external.outputs.additional_output1 }}
-      additional_output2: ${{ needs.call-external.outputs.additional_output2 }}
-      environment_output: ${{ needs.call-external.outputs.environment_output }}
