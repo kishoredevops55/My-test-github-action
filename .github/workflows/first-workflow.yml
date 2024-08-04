@@ -9,4 +9,6 @@ jobs:
     with:
       param1: 'value1'
       ENVIRONMENT: non-prod
+  call-final:
+    uses: ./.github/workflows/final-workflow.yml
   
