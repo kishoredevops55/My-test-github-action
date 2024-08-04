@@ -9,7 +9,7 @@ on:
       ENVIRONMENT:
         required: true
         type: string
-         
+
 jobs:
   example-job:
     runs-on: ubuntu-latest
@@ -25,11 +25,12 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run some example logic
+        id: run-logic
         run: |
           echo "Running some example logic with $EXAMPLE_ENV"
           echo "Using additional environment variables: $ADDITIONAL_ENV1, $ADDITIONAL_ENV2"
           echo "Environment: $ENVIRONMENT"
-
+        
       - name: Set outputs
         id: set-outputs
         run: |
@@ -38,7 +39,7 @@ jobs:
           echo "additional_output2=${{ env.ADDITIONAL_ENV2 }}" >> $GITHUB_ENV
           echo "environment_output=${{ env.ENVIRONMENT }}" >> $GITHUB_ENV
     outputs:
-      example_output: ${{ env.EXAMPLE_ENV }}
-      additional_output1: ${{ env.ADDITIONAL_ENV1 }}
-      additional_output2: ${{ env.ADDITIONAL_ENV2 }}
-      environment_output: ${{ env.ENVIRONMENT }}
+      example_output: ${{ steps.set-outputs.outputs.example_output }}
+      additional_output1: ${{ steps.set-outputs.outputs.additional_output1 }}
+      additional_output2: ${{ steps.set-outputs.outputs.additional_output2 }}
+      environment_output: ${{ steps.set-outputs.outputs.environment_output }}
