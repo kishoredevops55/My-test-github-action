@@ -1,10 +1,7 @@
 name: Final Workflow
 
 on: 
-  workflow_run:
-    workflows: ["First Workflow"]
-    types:
-      - completed
+ workflow_call:
 
 jobs:
   use-external-output:
