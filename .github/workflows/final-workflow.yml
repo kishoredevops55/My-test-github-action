@@ -1,7 +1,20 @@
 name: Final Workflow
 
 on: 
- workflow_call:
+  workflow_call:
+    inputs:
+      example_output:
+        required: true
+        type: string
+      additional_output1:
+        required: true
+        type: string
+      additional_output2:
+        required: true
+        type: string
+      environment_output:
+        required: true
+        type: string
 
 jobs:
   use-external-output:
@@ -13,10 +26,10 @@ jobs:
 
       - name: Use output from external workflow
         env:
-          EXTERNAL_OUTPUT: ${{ github.event.workflow_run.jobs.call-external-workflow.outputs.example_output }}
-          ADDITIONAL_OUTPUT1: ${{ github.event.workflow_run.jobs.call-external-workflow.outputs.additional_output1 }}
-          ADDITIONAL_OUTPUT2: ${{ github.event.workflow_run.jobs.call-external-workflow.outputs.additional_output2 }}
-          ENVIRONMENT_OUTPUT: ${{ github.event.workflow_run.jobs.call-external-workflow.outputs.environment_output }}
+          EXTERNAL_OUTPUT: ${{ inputs.example_output }}
+          ADDITIONAL_OUTPUT1: ${{ inputs.additional_output1 }}
+          ADDITIONAL_OUTPUT2: ${{ inputs.additional_output2 }}
+          ENVIRONMENT_OUTPUT: ${{ inputs.environment_output }}
         run: |
           echo "Using external output: $EXTERNAL_OUTPUT"
           echo "Using additional outputs: $ADDITIONAL_OUTPUT1, $ADDITIONAL_OUTPUT2"
